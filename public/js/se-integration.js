@@ -32,6 +32,7 @@ $(document).ready(function(){
 });
 
 var onLoginSuccess = function(data){
+	console.log(data);
 	access_token = data.accessToken;
 	users = data.network_users;
 
