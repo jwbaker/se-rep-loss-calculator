@@ -1,10 +1,11 @@
 var url = 'https://se-rep-loss-calculator.herokuapp.com/'
 
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
-var loginTemplate = '<p><img src="http://se-flair.appspot.com/__SEID__.png" alt=""></p>'
+var loginTemplate = '<p>Login successful!</p>';
+var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
 var access_token = undefined;
-var users = undefined;
+var sites = undefined;
 
 $(document).ready(function(){
 	$('#login-container').html(noLoginTemplate);
@@ -34,14 +35,20 @@ $(document).ready(function(){
 var onLoginSuccess = function(data){
 	console.log(data);
 	access_token = data.accessToken;
-	users = data.network_users;
+	sites = data.networkUsers;
 
-	for(var i = 0; i < users.length; i++){
-		if(users[i].site_url === 'http://stackexchange.com'){
-			$('#login-container').html(loginTemplate.replace(
-				'__SEID__',
-				users[i].account_id
-			));
-		}
-	}
+	$('#login-container').html(loginTemplate);
+
+	buildSiteSelector();
+}
+
+var buildSiteSelector = function(){
+	var options = selectorOptionTemplate.replace('__VALUE__', '').replace('__TITLE__', 'Please choose a site');
+
+	$.each(users, function(idx, val){
+		options += selectorOptionTemplate.replace('__VALUE__', val.user_id).replace('__TITLE__', val.site_name);
+	});
+
+	$('#site-selector-container select').append(options);
+	$('#site-selector-container select').prop('disabled', false);
 }
