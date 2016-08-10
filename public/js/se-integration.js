@@ -1,4 +1,4 @@
-var url = 'http://localhost:8000'
+var url = 'https://se-rep-loss-calculator.herokuapp.com/'
 
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<p><img src="http://se-flair.appspot.com/__SEID__.png" alt=""></p>'
