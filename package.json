@@ -1,0 +1,23 @@
+{
+  "name": "se-rep-loss-calculator",
+  "version": "1.0.0",
+  "description": "A simple web application to quickly calculate how much reputation a user has lost to the reputation cap",
+  "main": "web.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwbaker/se-rep-loss-calculator.git"
+  },
+  "author": "Jason Baker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwbaker/se-rep-loss-calculator/issues"
+  },
+  "homepage": "https://github.com/jwbaker/se-rep-loss-calculator#readme",
+  "dependencies": {
+    "ejs": "^2.5.1",
+    "express": "^4.14.0"
+  }
+}
