@@ -46,7 +46,8 @@ var buildSiteSelector = function(){
 	var options = selectorOptionTemplate.replace('__VALUE__', '').replace('__TITLE__', 'Please choose a site');
 
 	$.each(sites, function(idx, val){
-		options += selectorOptionTemplate.replace('__VALUE__', val.user_id).replace('__TITLE__', val.site_name);
+		options += selectorOptionTemplate.replace('__VALUE__', idx)
+										 .replace('__TITLE__', val.site_name);
 	});
 
 	$('#site-selector-container select').append(options);
