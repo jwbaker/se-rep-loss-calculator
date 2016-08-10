@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jwbaker/se-rep-loss-calculator#readme",
   "dependencies": {
     "ejs": "^2.5.1",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "moment": "^2.14.1"
   }
 }
