@@ -45,7 +45,7 @@ var onLoginSuccess = function(data){
 var buildSiteSelector = function(){
 	var options = selectorOptionTemplate.replace('__VALUE__', '').replace('__TITLE__', 'Please choose a site');
 
-	$.each(users, function(idx, val){
+	$.each(sites, function(idx, val){
 		options += selectorOptionTemplate.replace('__VALUE__', val.user_id).replace('__TITLE__', val.site_name);
 	});
 
