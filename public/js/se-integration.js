@@ -3,6 +3,8 @@ var url = window.location.protocol + '//' + window.location.host;
 var stackUrl = 'https://api.stackexchange.com';
 var version = '/2.2';
 
+var apiKey = 'LatL0Qaw3)dPKFoK6Y1yiQ((';
+
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
@@ -22,7 +24,7 @@ $(document).ready(function(){
 
 	SE.init({
 		clientId: 6388,
-		key: 'LatL0Qaw3)dPKFoK6Y1yiQ((',
+		key: apiKey,
 		channelUrl: url + '/blank',
 		complete: function(data){
 			console.log(data);
@@ -128,7 +130,8 @@ var setTargetSite = function(idx){
 }
 
 var doRepCalculation = function(){
-	var queryString = stackUrl + version + '/me/reputation-history-full/' + $.param({
+	var queryString = stackUrl + version + '/me/reputation-history-full?' + $.param({
+		key: apiKey,
 		site: targetSiteUrl,
 		access_token: accessToken,
 		fromdate: fromDate,
