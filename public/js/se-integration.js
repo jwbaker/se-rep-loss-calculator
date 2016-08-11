@@ -7,11 +7,10 @@ var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
-var access_token = undefined;
+var accessToken = undefined;
 var sites = undefined;
 
 var targetSiteUrl = undefined;
-var targetUserId = undefined;
 
 var fromDate = undefined;
 var toDate = undefined;
@@ -40,6 +39,10 @@ $(document).ready(function(){
 			scope: ['private_info'],
 			networkUsers: true
 		});
+	});
+
+	$('#calculate-button').click(function(event){
+		doRepCalculation();
 	});
 
 	$('#site-selector-container select').change(function(event){
@@ -94,7 +97,7 @@ var datePickerInit = function(){
 
 var onLoginSuccess = function(data){
 	console.log(data);
-	access_token = data.accessToken;
+	accessToken = data.accessToken;
 	sites = data.networkUsers;
 
 	$('#login-container').html(loginTemplate.replace('__SEID__', sites[0].account_id));
@@ -122,4 +125,21 @@ var setTargetSite = function(idx){
 
 	targetSiteUrl = sites[idx].site_url.replace('http://', '');
 	targetUserId = sites[idx].user_id;
+}
+
+var doRepCalculation = function(){
+	var queryString = stackUrl + version + '/me/reputation-history-full/' + $.param({
+		site: targetSiteUrl,
+		access_token: accessToken,
+		fromdate: fromDate,
+		toDate: toDate,
+	});
+
+	$.ajax(queryString)
+	.done(function(data, status, xhr){
+		console.log(data);
+	})
+	.fail(function(xhr, status, err){
+		console.log(err);
+	});
 }
