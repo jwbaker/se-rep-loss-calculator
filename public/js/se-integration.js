@@ -7,7 +7,7 @@ var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
-var access_token = 'kMQ5Hi8GKfsjXBKSJgzSeA))';
+var access_token = undefined;
 var sites = undefined;
 
 var targetSiteUrl = undefined;
@@ -48,11 +48,14 @@ $(document).ready(function(){
 		if(idx === ''){
 			$(this).parent().addClass('has-error');
 			$('#site-selector-container .help-block').removeClass('hidden');
+			$('#calculate-btn').addClass('disabled');
 		} else{
 			$(this).parent().removeClass('has-error');
 			$('#site-selector-container .help-block').addClass('hidden');
 
+			console.log(idx);
 			setTargetSite(idx);
+			$('#calculate-btn').removeClass('disabled');
 		}
 	});
 });
