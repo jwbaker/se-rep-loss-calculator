@@ -4,7 +4,7 @@ var stackURL = 'https://api.stackexchange.com';
 var version = '/2.2';
 
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
-var loginTemplate = '<img src="http://se-flair.appspot.com/__SEID__.png" />';
+var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
 var access_token = undefined;
