@@ -1,7 +1,10 @@
-var url = 'https://se-rep-loss-calculator.herokuapp.com/'
+var url = window.location.protocol + '//' + window.location.host;
+
+var stackURL = 'https://api.stackexchange.com';
+var version = '/2.2';
 
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
-var loginTemplate = '<p>Login successful!</p>';
+var loginTemplate = '<img src="http://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
 var access_token = undefined;
@@ -30,6 +33,18 @@ $(document).ready(function(){
 			networkUsers: true
 		});
 	});
+
+	$('#site-selector-container select').change(function(event){
+		var idx = $(this).val();
+
+		if(idx === ''){
+			$(this).parent().addClass('has-error');
+			$('#site-selector-container .help-block').removeClass('hidden');
+		} else{
+			$(this).parent().removeClass('has-error');
+			$('#site-selector-container .help-block').addClass('hidden');
+		}
+	});
 });
 
 var onLoginSuccess = function(data){
@@ -37,7 +52,7 @@ var onLoginSuccess = function(data){
 	access_token = data.accessToken;
 	sites = data.networkUsers;
 
-	$('#login-container').html(loginTemplate);
+	$('#login-container').html(loginTemplate.replace('__SEID__', sites[0].account_id));
 
 	buildSiteSelector();
 }
