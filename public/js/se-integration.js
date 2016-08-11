@@ -13,8 +13,13 @@ var sites = undefined;
 var targetSiteUrl = undefined;
 var targetUserId = undefined;
 
+var fromDate = undefined;
+var toDate = undefined;
+
 $(document).ready(function(){
 	$('#login-container').html(noLoginTemplate);
+
+	datePickerInit();
 
 	SE.init({
 		clientId: 6388,
@@ -51,6 +56,38 @@ $(document).ready(function(){
 		}
 	});
 });
+
+var datePickerInit = function(){
+	var formatString = 'MMMM D, YYYY';
+	var start = moment().subtract(6, 'days');
+	var end = moment();
+
+	function cb(start, end) {
+		fromDate = start.hour(0).minute(0).second(0).utc().unix();
+		toDate = end.hour(23).minute(59).second(59).utc().unix();
+		console.log(fromDate);
+		console.log(toDate);
+		$('#date-range-picker span').html(start.format(formatString) + ' - ' + end.format(formatString));
+	}
+
+	$('#date-range-picker').daterangepicker({
+		startDate: start,
+		endDate: end,
+		locale: {
+			format: formatString
+		},
+		ranges: {
+			'Today': [moment(), moment()],
+			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+			'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+			'This Month': [moment().startOf('month'), moment().endOf('month')],
+			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+		}
+	}, cb);
+
+	cb(start, end);
+}
 
 var onLoginSuccess = function(data){
 	console.log(data);
