@@ -58,7 +58,7 @@ $(document).ready(function(){
 
 			console.log(idx);
 			setTargetSite(idx);
-			$('#calculate-btn').removeClass('disabled');
+			$('#calculate-button').removeClass('disabled');
 		}
 	});
 });
