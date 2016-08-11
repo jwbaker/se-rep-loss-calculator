@@ -7,8 +7,11 @@ var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
-var access_token = undefined;
+var access_token = 'kMQ5Hi8GKfsjXBKSJgzSeA))';
 var sites = undefined;
+
+var targetSiteUrl = undefined;
+var targetUserId = undefined;
 
 $(document).ready(function(){
 	$('#login-container').html(noLoginTemplate);
@@ -43,6 +46,8 @@ $(document).ready(function(){
 		} else{
 			$(this).parent().removeClass('has-error');
 			$('#site-selector-container .help-block').addClass('hidden');
+
+			setTargetSite(idx);
 		}
 	});
 });
@@ -67,4 +72,14 @@ var buildSiteSelector = function(){
 
 	$('#site-selector-container select').append(options);
 	$('#site-selector-container select').prop('disabled', false);
+}
+
+var setTargetSite = function(idx){
+	if(idx < 0 || idx >= sites.length) {
+		alert('Could not select site with index ' + idx);
+		return;
+	}
+
+	targetSiteUrl = sites[idx].site_url.replace('http://', '');
+	targetUserId = sites[idx].user_id;
 }
