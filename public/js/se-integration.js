@@ -1,6 +1,6 @@
 var url = window.location.protocol + '//' + window.location.host;
 
-var stackURL = 'https://api.stackexchange.com';
+var stackUrl = 'https://api.stackexchange.com';
 var version = '/2.2';
 
 var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
