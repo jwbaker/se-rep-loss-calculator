@@ -133,7 +133,7 @@ var setTargetSite = function(idx){
 }
 
 var buildRepQueryString = function(page){
-	return stackUrl + version + '/me/reputation-history-full?' + $.param({
+	return stackUrl + version + '/me/reputation-history/full?' + $.param({
 		key: apiKey,
 		site: targetSiteUrl,
 		access_token: accessToken,
@@ -219,7 +219,7 @@ var POST_DEPENDENT_REP_CHANGES = {
 
 var doCalculateRepForPostTypes = function(repForPostIds){
 	total = 0;
-	postIds = repForPostIds.keys();
+	postIds = Object.keys(repForPostIds);
 
 	for(var i = 0; i < postIds.length; i += 100){
 		var end = Math.min(postIds.length, i+100);
