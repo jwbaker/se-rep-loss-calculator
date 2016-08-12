@@ -198,7 +198,8 @@ var buildPostsQueryString = function(postIds){
 	return stackUrl + version + '/posts/' + vectorizedPostIds + '?' + $.param({
 		key: apiKey,
 		site: targetSiteUrl,
-		pagesize=100
+		pagesize: 100
+	});
 }
 
 var POST_DEPENDENT_REP_CHANGES = {
