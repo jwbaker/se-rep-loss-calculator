@@ -20,6 +20,7 @@ var toDate = undefined;
 var reputationObjects = {};
 
 $(document).ready(function(){
+	moment.tz.setDefault('Etc/UTC');
 	$('#login-container').html(noLoginTemplate);
 
 	datePickerInit();
