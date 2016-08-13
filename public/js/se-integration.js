@@ -199,7 +199,7 @@ var doReputationCalculation = function(postRepChanges){
 
 	doCalculateRepForPostTypes(idsToCheck).then(function(result){
 		earnedRep += result;
-		alert("Earned: " + earnedRep + "; actual: " + actualRep);
+		alert('You have lost ' + (earnedRep - actualRep) + ' reputation to the rep cap in that period');
 	}, function(error){
 		alert('Something went wrong: ' + error);
 	});
