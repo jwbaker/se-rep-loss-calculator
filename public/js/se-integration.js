@@ -9,12 +9,10 @@ var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
-// var accessToken = undefined;
-var accessToken = 'yYJKNrOkWemouX8aXqXbtg))';
+var accessToken = undefined;
 var sites = undefined;
 
-// var targetSiteUrl = undefined;
-var targetSiteUrl = 'scifi';
+var targetSiteUrl = undefined;
 
 var fromDate = undefined;
 var toDate = undefined;
