@@ -66,7 +66,6 @@ $(document).ready(function(){
 			$(this).parent().removeClass('has-error');
 			$('#site-selector-container .help-block').addClass('hidden');
 
-			console.log(idx);
 			setTargetSite(idx);
 			$('#calculate-button').removeClass('disabled');
 		}
@@ -81,8 +80,6 @@ var datePickerInit = function(){
 	function cb(start, end) {
 		fromDate = start.hour(0).minute(0).second(0).utc().unix();
 		toDate = end.hour(23).minute(59).second(59).utc().unix();
-		console.log(fromDate);
-		console.log(toDate);
 		$('#date-range-picker span').html(start.format(formatString) + ' - ' + end.format(formatString));
 	}
 
@@ -106,7 +103,6 @@ var datePickerInit = function(){
 }
 
 var onLoginSuccess = function(data){
-	console.log(data);
 	accessToken = data.accessToken;
 	sites = data.networkUsers;
 
@@ -157,7 +153,6 @@ var buildReputationObjects = function(page){
 
 	$.ajax(queryString)
 	.done(function(data, status, xhr){
-		console.log(data);
 		$.each(data.items, function(idx, elem){
 			if(!(elem.post_id in reputationObjects)){
 				reputationObjects[elem.post_id] = [];
@@ -172,6 +167,7 @@ var buildReputationObjects = function(page){
 		}
 	})
 	.fail(function(xhr, status, err){
+		console.log(xhr);
 		deferred.reject(err);
 	});
 
@@ -191,7 +187,6 @@ var doReputationCalculation = function(postRepChanges){
 			actualRep += repObject.reputation_change;
 
 			if($.inArray(repObject.reputation_history_type, POST_TYPE_DEPENDENT) >= 0){
-				console.log(repObject.reputation_history_type);
 				if(!(postId in idsToCheck)){
 					idsToCheck[postId] = [];
 				}
@@ -251,6 +246,7 @@ var _doCalculateRepForPostTypes = function(queryIds, repForPostIds){
 		deferred.resolve(total);
 	})
 	.fail(function(xhr, status, err){
+		console.log(xhr);
 		deferred.reject(err);
 	});
 
