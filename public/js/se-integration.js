@@ -9,10 +9,12 @@ var noLoginTemplate = '<button class="btn btn-primary">Log in</button>';
 var loginTemplate = '<img src="https://se-flair.appspot.com/__SEID__.png" />';
 var selectorOptionTemplate = '<option value="__VALUE__">__TITLE__</option>';
 
-var accessToken = undefined;
+// var accessToken = undefined;
+var accessToken = 'yYJKNrOkWemouX8aXqXbtg))';
 var sites = undefined;
 
-var targetSiteUrl = undefined;
+// var targetSiteUrl = undefined;
+var targetSiteUrl = 'scifi';
 
 var fromDate = undefined;
 var toDate = undefined;
@@ -46,8 +48,11 @@ $(document).ready(function(){
 	});
 
 	$('#calculate-button').click(function(event){
-		buildReputationObjects();
-		doReputationCalculation(reputationObjects);
+		buildReputationObjects().then(function(reputationObjects){
+			doReputationCalculation(reputationObjects);
+		}, function(error){
+			alert('Something went wrong: ' + error);
+		});
 	});
 
 	$('#site-selector-container select').change(function(event){
@@ -139,11 +144,14 @@ var buildRepQueryString = function(page){
 		access_token: accessToken,
 		fromdate: fromDate,
 		toDate: toDate,
-		page: page
+		page: page,
+		pagesize: 100
 	});
 }
 
 var buildReputationObjects = function(page){
+	var deferred = Q.defer();
+
 	page = page || 1;
 	var queryString = buildRepQueryString(page);
 
@@ -159,11 +167,15 @@ var buildReputationObjects = function(page){
 
 		if(data.has_more){
 			buildReputationObjects(page++);
+		} else{
+			deferred.resolve(reputationObjects);
 		}
 	})
 	.fail(function(xhr, status, err){
-		alert('Something went wrong: ' + err);
+		deferred.reject(err);
 	});
+
+	return deferred.promise;
 }
 
 var POST_TYPE_DEPENDENT = ['voter_downvotes', 'voter_undownvotes', 'post_upvoted', 'post_unupvoted'];
@@ -178,7 +190,8 @@ var doReputationCalculation = function(postRepChanges){
 			var repObject = postRepChanges[postId][i];
 			actualRep += repObject.reputation_change;
 
-			if($.inArray(repObject.reputation_history_type, POST_TYPE_DEPENDENT)){
+			if($.inArray(repObject.reputation_history_type, POST_TYPE_DEPENDENT) >= 0){
+				console.log(repObject.reputation_history_type);
 				if(!(postId in idsToCheck)){
 					idsToCheck[postId] = [];
 				}
@@ -189,8 +202,12 @@ var doReputationCalculation = function(postRepChanges){
 		}
 	}
 
-	earnedRep += doCalculateRepForPostTypes(idsToCheck);
-	alert("Earned: " + earnedRep + "; actual: " + actualRep);
+	doCalculateRepForPostTypes(idsToCheck).then(function(result){
+		earnedRep += result;
+		alert("Earned: " + earnedRep + "; actual: " + actualRep);
+	}, function(error){
+		alert('Something went wrong: ' + error);
+	});
 }
 
 var buildPostsQueryString = function(postIds){
@@ -217,27 +234,54 @@ var POST_DEPENDENT_REP_CHANGES = {
 	}
 };
 
-var doCalculateRepForPostTypes = function(repForPostIds){
-	total = 0;
-	postIds = Object.keys(repForPostIds);
+var _doCalculateRepForPostTypes = function(queryIds, repForPostIds){
+	var deferred = Q.defer();
 
+	var queryString = buildPostsQueryString(queryIds);
+	$.ajax(queryString)
+	.done(function(data, status, xhr){
+		var total = 0;
+		$.each(data.items, function(idx, elem){
+			var postType = elem.post_type;
+			for(var i = 0; i < repForPostIds[elem.post_id].length; i++){
+				var repChangeType = repForPostIds[elem.post_id][i];
+				total += POST_DEPENDENT_REP_CHANGES[postType][repChangeType];
+			}
+		});
+		deferred.resolve(total);
+	})
+	.fail(function(xhr, status, err){
+		deferred.reject(err);
+	});
+
+	return deferred.promise;
+}
+
+var doCalculateRepForPostTypes = function(repForPostIds){
+	var deferred = Q.defer();
+
+	var total = 0;
+	var postIds = Object.keys(repForPostIds);
+
+	var promises = [];
 	for(var i = 0; i < postIds.length; i += 100){
 		var end = Math.min(postIds.length, i+100);
 		var queryIds = postIds.slice(i, end);
 
-		var queryString = buildPostsQueryString(queryIds);
-		$.ajax(queryString)
-		.done(function(data, status, xhr){
-			$.each(data.items, function(idx, elem){
-				var postType = elem.post_type;
-				for(var j = 0; j < repForPostIds[elem.post_id]; j++){
-					var repChangeType = repForPostIds[elem.post_id][j];
-					total += POST_DEPENDENT_REP_CHANGES[postType][repChangeType];
-				}
-			})
-		})
-		.fail(function(xhr, status, err){
-			alert('Something went wrong: ' + err);
-		});
+		promises.push(_doCalculateRepForPostTypes(queryIds, repForPostIds));
 	}
+
+	Q.allSettled(promises).then(function(results){
+		$.each(results, function(idx, elem){
+			if(elem.state === 'fulfilled'){
+				total += elem.value;
+			} else if(elem.state === 'rejected'){
+				deferred.reject(elem.reason);
+			}
+		});
+
+		deferred.resolve(total);
+	});
+
+	return deferred.promise;
 }
