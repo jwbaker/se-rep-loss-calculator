@@ -35,6 +35,7 @@ $(document).ready(function(){
 	});
 
 	$('#login-container button').click(function(event){
+		$('#login-container').html('<i class="fa fa-spinner fa-spin fa-2x"></i>');
 		SE.authenticate({
 			success: onLoginSuccess,
 			error: function(data){
@@ -72,7 +73,7 @@ $(document).ready(function(){
 });
 
 var datePickerInit = function(){
-	var formatString = 'MMMM D, YYYY';
+	var formatString = 'MMMM D, YYYY HH:mm:ss';
 	var start = moment().subtract(6, 'days');
 	var end = moment();
 

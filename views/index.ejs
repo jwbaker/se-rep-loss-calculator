@@ -23,34 +23,36 @@
 	</nav>
 
 	<div class="container">
-		<h2>Step 1: Log in</h2>	
-		<div id="login-container">
-		</div>
-
-		<h2>Step 2: Select a site</h2>
-		<div id="site-selector-container">
-			<div class="form-group">
-				<select class="form-control" disabled="disabled">
-				</select>
-				<span class="help-block hidden"><p class="text-danger">Please select a site</p></span>
+		<div class="col-md-6 col-md-offset-3">
+			<h2>Step 1: Log in</h2>	
+			<div id="login-container">
 			</div>
+
+			<h2>Step 2: Select a site</h2>
+			<div id="site-selector-container">
+				<div class="form-group">
+					<select class="form-control" disabled="disabled">
+					</select>
+					<span class="help-block hidden"><p class="text-danger">Please select a site</p></span>
+				</div>
+			</div>
+
+			<h2>Step 3: Select a date range</h2>
+			<div id="date-range-picker" class="pull-right disabled" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+				<i class="fa fa-calendar"></i>&nbsp;
+				<span></span> <b class="caret"></b>
+			</div>
+			<p><span class="help-block">All dates are in UTC</span></p>
+
+
+			<h2>Step 4: Calculate</h2>
+			<button id="calculate-button" class="btn btn-primary disabled">Calculate</button>
 		</div>
-
-		<h2>Step 3: Select a date range</h2>
-		<div id="date-range-picker" class="pull-right disabled" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-			<i class="fa fa-calendar"></i>&nbsp;
-			<span></span> <b class="caret"></b>
-		</div>
-		<p><span class="help-block">All dates are in UTC</span></p>
-
-
-		<h2>Step 4: Calculate</h2>
-		<button id="calculate-button" class="btn btn-primary disabled">Calculate</button>
 	</div>
 
 	<div class="container">
 		<hr />
-		<p class="small"><i class="fa fa-copyright"></i> <%= year %> <a href="http://stackexchange.com/users/246453">Jason Baker</a></p>
+		<p class="small"><i class="fa fa-copyright"></i> <%= year %> <a href="http://stackexchange.com/users/246453">Jason Baker</a>. Code released under the terms of the <a href="https://opensource.org/licenses/mit-license.html">MIT license</a>.</p>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
