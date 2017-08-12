@@ -4,6 +4,6 @@
   </div>
   <div *ngIf="loggedIn">
       <h2>Logged in as:</h2>
-      <img src="https://stackexchange.com/users/flair/{{ accountId }}.png" width="208" height="58">
+      <img src="https://stackexchange.com/users/flair/{{ loggedInData.networkUsers[0].accountId }}.png" width="208" height="58">
   </div>
 </div>

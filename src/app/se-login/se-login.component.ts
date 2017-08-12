@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { StackExchangeService } from '../stack-exchange.service';
 import { AlertableDirective } from '../alertable/alertable.directive';
 import { AlertManagerService } from '../alert-manager.service'
+import { SeLoggedInData } from "../models/se-logged-in-data";
 
 @Component({
   selector: 'app-se-login',
@@ -11,7 +12,7 @@ import { AlertManagerService } from '../alert-manager.service'
 export class SeLoginComponent extends AlertableDirective {
   loggedInValue = false;
   @Output() loggedInChange = new EventEmitter();
-  private accountId: Number;
+  private loggedInData: SeLoggedInData;
 
   constructor(private seService: StackExchangeService, protected alertManager: AlertManagerService) {
     super(alertManager);
@@ -31,9 +32,9 @@ export class SeLoginComponent extends AlertableDirective {
     this.seService.logIn().then(data => {
       this.raise("success", "Login successful!", {});
       this.loggedIn = true;
-      this.accountId = data['networkUsers'][0]['account_id'];
+      this.loggedInData = <SeLoggedInData>data;
     }).catch(data => {
-      console.error(data.errorMessage);
+      console.error(data);
     });
   }
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SeLoggedInData } from './models/se-logged-in-data';
 declare var SE:any; // need to define the global SE object provided by the SDK
 
 @Injectable()
@@ -25,7 +26,9 @@ export class StackExchangeService {
         SE.authenticate({
           scope: ['private_info'],
           networkUsers: true,
-          success: resolve,
+          success: data => {
+            resolve(new SeLoggedInData(data))
+          },
           error: reject
         });
       });
