@@ -11,6 +11,8 @@ import { BlankComponent } from './blank/blank.component';
 import { StackExchangeService } from './stack-exchange.service';
 import { AlertManagerService } from './alert-manager.service';
 import { AlertableDirective } from './alertable/alertable.directive';
+import { SitePickerComponent } from './site-picker/site-picker.component';
+import { SeSiteShortPipe } from './se-site-short.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: CalculatorComponent },
@@ -23,7 +25,9 @@ const appRoutes: Routes = [
     SeLoginComponent,
     CalculatorComponent,
     BlankComponent,
-    AlertableDirective
+    AlertableDirective,
+    SitePickerComponent,
+    SeSiteShortPipe
   ],
   imports: [
     BrowserModule,

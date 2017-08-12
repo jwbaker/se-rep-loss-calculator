@@ -17,11 +17,25 @@ export class CalculatorComponent {
   }
 
   api_data = {
-    
+    networkUsers: [],
+    accessToken: '',
+    site: ''
   };
 
   wizard_status = {
-    logged_in: false
+    logged_in: false,
+    site_chosen: false
   };
+
+  private onLogIn(event){
+    this.wizard_status.logged_in = true;
+    this.api_data.networkUsers = event.networkUsers;
+    this.api_data.accessToken = event.accessToken;
+  }
+
+  private onSiteChosen(event: string){
+    this.wizard_status.site_chosen = event.length > 0;
+    this.api_data.site = event;
+  }
 
 }

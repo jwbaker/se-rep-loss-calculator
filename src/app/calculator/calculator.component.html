@@ -7,10 +7,10 @@
   </div>
   <form-wizard>
     <wizard-step [title]="'Log in'" [isValid]="wizard_status.logged_in">
-      <app-se-login [(loggedIn)]="wizard_status.logged_in"></app-se-login>
+      <app-se-login [loggedIn]="wizard_status.logged_in" (onLogIn)=onLogIn($event)></app-se-login>
     </wizard-step>
-    <wizard-step [title]="'Choose sites'" [isValid]="True">
-        
+    <wizard-step [title]="'Choose sites'" [isValid]="wizard_status.site_chosen">
+        <app-site-picker [sites]="api_data.networkUsers" (onSiteChosen)="onSiteChosen($event)"></app-site-picker>
     </wizard-step>
     <wizard-step [title]="'Choose date range'" [isValid]="True">
         

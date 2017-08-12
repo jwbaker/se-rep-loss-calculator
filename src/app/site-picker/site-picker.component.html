@@ -1,0 +1,4 @@
+<select id="site" class="form-control" required (change)="chooseSite($event.target.value)">
+  <option value="">Please choose an option</option>
+  <option *ngFor="let site of sites" [value]="site.siteUrl | seSiteShort" [innerHtml]="site.siteName"></option>
+</select>

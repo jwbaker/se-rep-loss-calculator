@@ -10,22 +10,12 @@ import { SeLoggedInData } from "../models/se-logged-in-data";
   styleUrls: ['./se-login.component.css']
 })
 export class SeLoginComponent extends AlertableDirective {
-  loggedInValue = false;
-  @Output() loggedInChange = new EventEmitter();
+  @Input() loggedIn:boolean = false;
+  @Output() onLogIn = new EventEmitter();
   private loggedInData: SeLoggedInData;
 
   constructor(private seService: StackExchangeService, protected alertManager: AlertManagerService) {
     super(alertManager);
-  }
-
-  @Input()
-  get loggedIn() {
-    return this.loggedInValue;
-  }
-
-  set loggedIn(value:boolean) {
-    this.loggedInValue = value;
-    this.loggedInChange.emit(this.loggedInValue);
   }
 
   doLogIn() {
@@ -33,6 +23,7 @@ export class SeLoginComponent extends AlertableDirective {
       this.raise("success", "Login successful!", {});
       this.loggedIn = true;
       this.loggedInData = <SeLoggedInData>data;
+      this.onLogIn.emit(this.loggedInData);
     }).catch(data => {
       console.error(data);
     });
