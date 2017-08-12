@@ -1,0 +1,9 @@
+<div class="my-2 mx-auto">
+  <div *ngIf="!loggedIn">
+  <button type="button" class="btn btn-primary" (click)="doLogIn()">Log in with StackExchange</button>
+  </div>
+  <div *ngIf="loggedIn">
+      <h2>Logged in as:</h2>
+      <img src="https://stackexchange.com/users/flair/{{ accountId }}.png" width="208" height="58">
+  </div>
+</div>

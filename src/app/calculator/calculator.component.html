@@ -1,0 +1,22 @@
+<nav class="navbar navbar-dark bg-primary sticky-top">
+    <a class="navbar-brand" href="#">SE Reputation Loss Calculator</a>
+</nav>
+<div class="container-fluid">
+  <div>
+    <alert *ngFor="let alert of alerts" type="{{alert.type}}">{{alert.message}}</alert>
+  </div>
+  <form-wizard>
+    <wizard-step [title]="'Log in'" [isValid]="wizard_status.logged_in">
+      <app-se-login [(loggedIn)]="wizard_status.logged_in"></app-se-login>
+    </wizard-step>
+    <wizard-step [title]="'Choose sites'" [isValid]="True">
+        
+    </wizard-step>
+    <wizard-step [title]="'Choose date range'" [isValid]="True">
+        
+    </wizard-step>
+    <wizard-step [title]="'Calculate!'" [isValid]="True">
+        
+    </wizard-step>
+  </form-wizard>
+</div>
