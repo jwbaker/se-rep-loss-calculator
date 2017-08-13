@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    <h2>
+      Start Date:
+      <small class="text-muted">{{start}}</small>
+    </h2>
+  </div>
+  <div class="card-block">
+      <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="start" [showWeeks]="false" (ngModelChange)="rangeChosen($event)"></datepicker>
+      <timepicker [min]="min" [max]="max" [(ngModel)]="start" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="rangeChosen($event)"></timepicker>
+  </div>
+</div>
+<div class="card">
+    <div class="card-header">
+      <h2>
+        End Date:
+        <small class="text-muted">{{end}}</small>
+      </h2>
+    </div>
+    <div class="card-block">
+        <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="end" [showWeeks]="false" (ngModelChange)="rangeChosen($event)"></datepicker>
+        <timepicker [min]="min" [max]="max" [(ngModel)]="end" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="rangeChosen($event)"></timepicker>
+      </div>
+  </div>

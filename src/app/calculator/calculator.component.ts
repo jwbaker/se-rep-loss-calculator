@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertData, AlertManagerService } from '../alert-manager.service';
+import { DateRange } from '../models/date-range';
 
 @Component({
   selector: 'app-calculator',
@@ -10,32 +11,44 @@ export class CalculatorComponent {
 
   alerts: AlertData[] = [];
 
+  private minDate: Date;
+  private maxDate: Date;
+
   constructor(private alertManager: AlertManagerService) { 
     alertManager.alertRaised$.subscribe(alert => {
       this.alerts.push(alert)
     });
   }
 
-  api_data = {
+  apiData = {
     networkUsers: [],
     accessToken: '',
-    site: ''
+    site: '',
+    dateRange: {}
   };
 
-  wizard_status = {
-    logged_in: false,
-    site_chosen: false
+  wizardStatus = {
+    loggedIn: false,
+    siteChosen: false,
+    dateRangeChosen: true
   };
 
   private onLogIn(event){
-    this.wizard_status.logged_in = true;
-    this.api_data.networkUsers = event.networkUsers;
-    this.api_data.accessToken = event.accessToken;
+    this.wizardStatus.loggedIn = true;
+    this.apiData.networkUsers = event.networkUsers;
+    this.apiData.accessToken = event.accessToken;
   }
 
   private onSiteChosen(event: string){
-    this.wizard_status.site_chosen = event.length > 0;
-    this.api_data.site = event;
+    this.wizardStatus.siteChosen = event.length > 0;
+    this.apiData.site = event;
+    this.maxDate = new Date();
+    this.minDate = this.apiData.networkUsers.find((value, index, obj) => value.siteUrl.includes(event)).creationDate;
+  }
+
+  private onRangePicked(event:DateRange){
+    this.apiData.dateRange = event;
+    console.log(event);
   }
 
 }

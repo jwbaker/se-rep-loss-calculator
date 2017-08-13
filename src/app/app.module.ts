@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AlertModule } from 'ngx-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { AlertModule, DatepickerModule, TimepickerModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { FormWizardModule } from 'angular2-wizard';
@@ -13,6 +14,7 @@ import { AlertManagerService } from './alert-manager.service';
 import { AlertableDirective } from './alertable/alertable.directive';
 import { SitePickerComponent } from './site-picker/site-picker.component';
 import { SeSiteShortPipe } from './se-site-short.pipe';
+import { SeRangePickerComponent } from './se-range-picker/se-range-picker.component';
 
 const appRoutes: Routes = [
   { path: '', component: CalculatorComponent },
@@ -27,13 +29,17 @@ const appRoutes: Routes = [
     BlankComponent,
     AlertableDirective,
     SitePickerComponent,
-    SeSiteShortPipe
+    SeSiteShortPipe,
+    SeRangePickerComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     FormWizardModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    DatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [StackExchangeService, AlertManagerService],
   bootstrap: [AppComponent]
