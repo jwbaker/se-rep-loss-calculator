@@ -12,7 +12,7 @@
     <wizard-step [title]="'Choose sites'" [isValid]="wizardStatus.siteChosen">
         <app-site-picker [sites]="apiData.networkUsers" (onSiteChosen)="onSiteChosen($event)"></app-site-picker>
     </wizard-step>
-    <wizard-step [title]="'Choose date range'" [isValid]="True">
+    <wizard-step [title]="'Choose date range'" [isValid]="true">
         <app-se-range-picker [min]="minDate" [max]="maxDate" (onRangeChosen)="onRangePicked($event)"></app-se-range-picker>
     </wizard-step>
     <wizard-step [title]="'Calculate!'" [isValid]="True">

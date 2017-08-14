@@ -2,23 +2,23 @@
   <div class="card-header">
     <h2>
       Start Date:
-      <small class="text-muted">{{start}}</small>
+      <small class="text-muted">{{dates.start | date:'longDate'}} {{times.start | date:'mediumTime'}}</small>
     </h2>
   </div>
   <div class="card-block">
-      <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="start" [showWeeks]="false" (ngModelChange)="rangeChosen($event)"></datepicker>
-      <timepicker [min]="min" [max]="max" [(ngModel)]="start" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="rangeChosen($event)"></timepicker>
+      <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="dates.start" [showWeeks]="false"></datepicker>
+      <timepicker [min]="min" [max]="max" [(ngModel)]="times.start" [showSeconds]="true" [showMeridian]="true"></timepicker>
   </div>
 </div>
 <div class="card">
     <div class="card-header">
       <h2>
         End Date:
-        <small class="text-muted">{{end}}</small>
+        <small class="text-muted">{{dates.end | date:'longDate'}} {{times.end | date:'mediumTime'}}</small>
       </h2>
     </div>
     <div class="card-block">
-        <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="end" [showWeeks]="false" (ngModelChange)="rangeChosen($event)"></datepicker>
-        <timepicker [min]="min" [max]="max" [(ngModel)]="end" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="rangeChosen($event)"></timepicker>
+        <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="dates.end" [showWeeks]="false"></datepicker>
+        <timepicker [min]="min" [max]="max" [(ngModel)]="times.end" [showSeconds]="true" [showMeridian]="true"></timepicker>
       </div>
   </div>

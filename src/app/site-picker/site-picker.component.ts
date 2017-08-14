@@ -13,7 +13,6 @@ export class SitePickerComponent {
   constructor() { }
 
   chooseSite(site:String) {
-    console.log(site);
     this.onSiteChosen.emit(site);
   }
 
