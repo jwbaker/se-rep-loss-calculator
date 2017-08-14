@@ -18,10 +18,10 @@ export class SeRangePickerComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-      this.dates.start = this.min;
-      this.times.start = this.min;
-      this.dates.end = this.max;
-      this.times.end = this.max;
+    this.dates.start = this.min;
+    this.times.start = this.min;
+    this.dates.end = this.max;
+    this.times.end = this.max;
   }
 
   private setDate(key:string, newDate: Date){
@@ -35,7 +35,9 @@ export class SeRangePickerComponent implements OnChanges {
 
   private setTime(key:string, newTime:Date){
     this.times[key] = new Date(
-      0, 0, 0,
+      this.dates[key].getFullYear(),
+      this.dates[key].getMonth(),
+      this.dates[key].getDate(),
       newTime.getHours(),
       newTime.getMinutes(),
       newTime.getSeconds()
@@ -44,22 +46,21 @@ export class SeRangePickerComponent implements OnChanges {
   }
 
   private emitDateRange(){
-    console.log('hi');
     let unifiedStartDate = new Date(
       this.dates.start.getFullYear(),
       this.dates.start.getMonth(),
       this.dates.start.getDate(),
-      this.dates.start.getHours(),
-      this.dates.start.getMinutes(),
-      this.dates.start.getSeconds()
+      this.times.start.getHours(),
+      this.times.start.getMinutes(),
+      this.times.start.getSeconds()
     );
     let unifiedEndDate = new Date(
       this.dates.end.getFullYear(),
       this.dates.end.getMonth(),
       this.dates.end.getDate(),
-      this.dates.end.getHours(),
-      this.dates.end.getMinutes(),
-      this.dates.end.getSeconds()
+      this.times.end.getHours(),
+      this.times.end.getMinutes(),
+      this.times.end.getSeconds()
     );
     this.onRangeChosen.emit(new DateRange(unifiedStartDate, unifiedEndDate));
   }

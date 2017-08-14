@@ -6,8 +6,8 @@
     </h2>
   </div>
   <div class="card-block">
-      <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="dates.start" [showWeeks]="false"></datepicker>
-      <timepicker [min]="min" [max]="max" [(ngModel)]="times.start" [showSeconds]="true" [showMeridian]="true"></timepicker>
+      <datepicker [(ngModel)]="dates.start" [showWeeks]="false" (ngModelChange)="emitDateRange()"></datepicker>
+      <timepicker [(ngModel)]="times.start" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="emitDateRange()"></timepicker>
   </div>
 </div>
 <div class="card">
@@ -18,7 +18,7 @@
       </h2>
     </div>
     <div class="card-block">
-        <datepicker [minDate]="min" [maxDate]="max" [(ngModel)]="dates.end" [showWeeks]="false"></datepicker>
-        <timepicker [min]="min" [max]="max" [(ngModel)]="times.end" [showSeconds]="true" [showMeridian]="true"></timepicker>
+        <datepicker [(ngModel)]="dates.end" [showWeeks]="false" (ngModelChange)="emitDateRange()"></datepicker>
+        <timepicker [(ngModel)]="times.end" [showSeconds]="true" [showMeridian]="true" (ngModelChange)="emitDateRange()"></timepicker>
       </div>
   </div>
