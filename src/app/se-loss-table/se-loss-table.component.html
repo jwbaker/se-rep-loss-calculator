@@ -1,0 +1,21 @@
+<div *ngIf="working" class="loader-container">
+  <div class="loader">Working...</div>
+</div>
+<div *ngIf="!working">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Post ID</th>
+        <th>Reputation Change</th>
+        <th>Reputation History Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of reputationEvents">
+        <td>{{event.postId}}</td>
+        <td>{{event.reputationChange}}</td>
+        <td>{{event.reputationHistoryType}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

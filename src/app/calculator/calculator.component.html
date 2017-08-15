@@ -12,11 +12,11 @@
     <wizard-step [title]="'Choose sites'" [isValid]="wizardStatus.siteChosen">
         <app-site-picker [sites]="apiData.networkUsers" (onSiteChosen)="onSiteChosen($event)"></app-site-picker>
     </wizard-step>
-    <wizard-step [title]="'Choose date range'" [isValid]="true">
+    <wizard-step [title]="'Choose date range'" [isValid]="true" (onNext)="startCalculation()">
         <app-se-range-picker [min]="minDate" [max]="maxDate" (onRangeChosen)="onRangePicked($event)"></app-se-range-picker>
     </wizard-step>
-    <wizard-step [title]="'Calculate!'" [isValid]="True">
-        
+    <wizard-step [title]="'Calculate!'" [isValid]="false" (onPrev)="wizardStatus.doCalculate=false">
+        <app-se-loss-table [userId]="apiData.userId" [site]="apiData.site" [accessToken]="apiData.accessToken" [dateRange]="apiData.dateRange" [beginCalculation]="wizardStatus.doCalculate"></app-se-loss-table>
     </wizard-step>
   </form-wizard>
 </div>

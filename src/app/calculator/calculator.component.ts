@@ -23,6 +23,7 @@ export class CalculatorComponent {
   apiData = {
     networkUsers: [],
     accessToken: '',
+    userId: 0,
     site: '',
     dateRange: {}
   };
@@ -30,7 +31,8 @@ export class CalculatorComponent {
   wizardStatus = {
     loggedIn: false,
     siteChosen: false,
-    dateRangeChosen: true
+    dateRangeChosen: true,
+    doCalculate: false
   };
 
   private onLogIn(event){
@@ -40,15 +42,20 @@ export class CalculatorComponent {
   }
 
   private onSiteChosen(event: string){
+    const networkUserObject = this.apiData.networkUsers.find((value, index, obj) => value.siteUrl.includes(event));
     this.wizardStatus.siteChosen = event.length > 0;
     this.apiData.site = event;
+    this.apiData.userId = networkUserObject.userId;
     this.maxDate = new Date();
-    this.minDate = this.apiData.networkUsers.find((value, index, obj) => value.siteUrl.includes(event)).creationDate;
+    this.minDate = networkUserObject.creationDate;
   }
 
   private onRangePicked(event:DateRange){
     this.apiData.dateRange = event;
-    console.log(event);
+  }
+
+  private startCalculation(){
+    this.wizardStatus.doCalculate = true;
   }
 
 }

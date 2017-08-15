@@ -1,16 +1,29 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 import { SeLoggedInData } from './models/se-logged-in-data';
-declare var SE:any; // need to define the global SE object provided by the SDK
+import { DateRange } from "./models/date-range";
+import { SeReputationHistory, SeReputationHistoryResponse } from './models/se-reputation-history'
+import { Observable } from "rxjs";
+declare var SE: any; // need to define the global SE object provided by the SDK
+
+interface SEResponseObject<T> {
+  backoff?: number;
+  error_id?: number;
+  error_message?: string;
+  has_more: boolean;
+  items: T[];
+}
 
 @Injectable()
 export class StackExchangeService {
   private initPromise: Promise<boolean>;
+  private static apiKey = 'LatL0Qaw3)dPKFoK6Y1yiQ((';  
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.initPromise = new Promise((resolve, reject) => {
       SE.init({
         clientId: 6388,
-        key: 'LatL0Qaw3)dPKFoK6Y1yiQ((',
+        key: StackExchangeService.apiKey,
         channelUrl: 'http://localhost/blank',
         complete: function(data){
           resolve();
@@ -33,5 +46,38 @@ export class StackExchangeService {
         });
       });
     });
+  }
+
+  private getReputationEventsPage(route:String, params:String[], page:number){
+    const localParams = params.concat(["page=" + page]);
+
+    return this.http.get<SEResponseObject<SeReputationHistoryResponse>>(route + '?' + localParams.join('&'));
+  }
+
+  private getReputationEvents(route:String, params:String[], page:number){
+    return this.getReputationEventsPage(route, params, page).flatMap(response => {
+      if(response.error_id){
+        throw response.error_message;
+      }
+      const items$ = Observable.from(response.items).map((obj, idx) => new SeReputationHistory(obj));
+      const next$ = response.has_more
+        ? this.getReputationEvents(route, params, ++page)
+        : Observable.empty();
+      if(response.backoff) console.log(response.backoff);
+      return Observable.concat(items$, next$);
+    });
+  }
+
+  public getReputationHistory(userId:Number, site:String, accessToken:String, dateRange:DateRange, page?:number): Observable<SeReputationHistory> {
+    const route = 'https://api.stackexchange.com/2.2/users/' + userId + '/reputation-history/full';
+    const params = [
+      'key=' + StackExchangeService.apiKey,
+      'site=' + site,
+      'access_token=' + accessToken,
+      'fromdate=' + dateRange.start.getTime()/1000,
+      'todate=' + dateRange.end.getTime()/1000,
+      "pagesize=" + 100
+    ];
+    return this.getReputationEvents(route, params, page || 1);
   }
 }

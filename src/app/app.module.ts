@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AlertModule, DatepickerModule, TimepickerModule } from 'ngx-bootstrap';
@@ -15,6 +16,7 @@ import { AlertableDirective } from './alertable/alertable.directive';
 import { SitePickerComponent } from './site-picker/site-picker.component';
 import { SeSiteShortPipe } from './se-site-short.pipe';
 import { SeRangePickerComponent } from './se-range-picker/se-range-picker.component';
+import { SeLossTableComponent } from './se-loss-table/se-loss-table.component';
 
 const appRoutes: Routes = [
   { path: '', component: CalculatorComponent },
@@ -30,11 +32,13 @@ const appRoutes: Routes = [
     AlertableDirective,
     SitePickerComponent,
     SeSiteShortPipe,
-    SeRangePickerComponent
+    SeRangePickerComponent,
+    SeLossTableComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     FormWizardModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
     AlertModule.forRoot(),
