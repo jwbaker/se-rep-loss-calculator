@@ -2,18 +2,22 @@
   <div class="loader">Working...</div>
 </div>
 <div *ngIf="!working">
+  <p>Expected: {{reputationCounter.expectedReputation}}</p>
+  <p>Earned: {{reputationCounter.earnedReputation}}</p>
   <table class="table">
     <thead>
       <tr>
         <th>Post ID</th>
-        <th>Reputation Change</th>
+        <th>Expected Reputation Change</th>
+        <th>Actual Reputation Change</th>
         <th>Reputation History Type</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let event of reputationEvents">
         <td>{{event.postId}}</td>
-        <td>{{event.reputationChange}}</td>
+        <td>{{event.expectedReputation}}</td>
+        <td>{{event.earnedReputation}}</td>
         <td>{{event.reputationHistoryType}}</td>
       </tr>
     </tbody>

@@ -42,12 +42,12 @@ export class SeReputationHistory {
     creationDate: Date;
     postId?: number;
     reputationChange: number;
-    reputationHistoryType:string;
+    reputationHistoryType:SeReputationHistoryType;
 
     constructor(obj:SeReputationHistoryResponse) {
         this.creationDate = obj.creation_date;
         this.reputationChange = obj.reputation_change;
-        this.reputationHistoryType = SeReputationHistoryType[obj.reputation_history_type];
+        this.reputationHistoryType = SeReputationHistoryType[<string>obj.reputation_history_type];
         this.postId = obj.post_id;
     }
 }
