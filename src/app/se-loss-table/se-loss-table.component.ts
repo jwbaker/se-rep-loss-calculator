@@ -48,20 +48,36 @@ export class SeLossTableComponent extends AlertableDirective implements OnChange
   private working = false;
   private message:string;
   private reputationEvents:ReputationDiscrepancy[];
-  private reputationCounter = {
-    earnedReputation: 1,
-    expectedReputation: 1,
-    earnedSuggestedEditReputation: 0,
-    expectedSuggestedEditReputation: 0
+  private reputationCounter:{
+    earnedReputation,
+    expectedReputation,
+    earnedSuggestedEditReputation,
+    expectedSuggestedEditReputation
   };
 
-  private postsForInspection = new Map<number, SeReputationHistory[]>();
+  private postsForInspection:Map<number, SeReputationHistory[]>;
 
-  constructor(private se:StackExchangeService, protected alertManager: AlertManagerService) { super(alertManager) }
+  constructor(private se:StackExchangeService, protected alertManager: AlertManagerService) { 
+    super(alertManager);
+    this.resetCalculation();
+   }
+
+  private resetCalculation() {
+    this.working = false;
+    this.reputationCounter = {
+      earnedReputation: 1,
+      expectedReputation: 1,
+      earnedSuggestedEditReputation: 0,
+      expectedSuggestedEditReputation: 0
+    };
+    this.reputationEvents = [];
+    this.postsForInspection = new Map<number, SeReputationHistory[]>();
+}
 
   ngOnChanges(changes: SimpleChanges): void {
     const beginCalculationChanged = changes.beginCalculation;
     if(beginCalculationChanged && beginCalculationChanged.currentValue && beginCalculationChanged.currentValue !== beginCalculationChanged.previousValue){
+      this.resetCalculation();
       this.doCalculate();
     }
   }
@@ -69,7 +85,6 @@ export class SeLossTableComponent extends AlertableDirective implements OnChange
   private doCalculate() {
     this.working = true;
     this.message = SeLossTableComponent.messages.working;
-    this.reputationEvents = [];
 
     let subscription = this.se.getReputationHistory(this.userId, this.site, this.accessToken, this.dateRange).subscribe({
       next: event => this.processReputationEvent(event),
