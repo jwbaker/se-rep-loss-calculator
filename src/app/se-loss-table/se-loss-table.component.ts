@@ -51,7 +51,8 @@ export class SeLossTableComponent extends AlertableDirective implements OnChange
   private reputationCounter = {
     earnedReputation: 1,
     expectedReputation: 1,
-    suggestedEditReputation: 0
+    earnedSuggestedEditReputation: 0,
+    expectedSuggestedEditReputation: 0
   };
 
   private postsForInspection = new Map<number, SeReputationHistory[]>();
@@ -78,6 +79,8 @@ export class SeLossTableComponent extends AlertableDirective implements OnChange
         this.working = false;
       },
       complete: () => {
+        this.reputationCounter.earnedReputation += this.reputationCounter.earnedSuggestedEditReputation;
+        this.reputationCounter.expectedReputation += this.reputationCounter.expectedSuggestedEditReputation;
         this.processPosts();
       }
     });
@@ -88,9 +91,14 @@ export class SeLossTableComponent extends AlertableDirective implements OnChange
     let push = true;
     switch(repHistoryType){
       case SeReputationHistoryType.suggested_edit_approval_overridden:
+        const mult = -1;
       case SeReputationHistoryType.suggested_edit_approval_received:
-        this.reputationCounter.suggestedEditReputation = Math.min(
-          this.reputationCounter.suggestedEditReputation + reputationEvent.reputationChange,
+        this.reputationCounter.earnedSuggestedEditReputation = Math.min(
+          this.reputationCounter.earnedSuggestedEditReputation + reputationEvent.reputationChange,
+          1000
+        );
+        this.reputationCounter.expectedSuggestedEditReputation = Math.min(
+          this.reputationCounter.expectedSuggestedEditReputation + (mult || 1)*reputationEvent.reputationChange,
           1000
         );
         break;
